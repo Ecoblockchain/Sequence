@@ -206,6 +206,9 @@ void TransactionView::setModel(WalletModel *model)
 
         columnResizingFixer = new GUIUtil::TableViewLastColumnResizingFixer(transactionView, AMOUNT_MINIMUM_COLUMN_WIDTH, MINIMUM_COLUMN_WIDTH);
 
+        transactionProxyModel->setMinAmount(0);
+        updateTotalAmount();
+
         if (model->getOptionsModel())
         {
             // Add third party transaction URLs to context menu
@@ -238,7 +241,7 @@ void TransactionView::chooseDate(int idx)
     if(!transactionProxyModel)
         return;
     QDate current = QDate::currentDate();
-    dateRangeWidget->setVisible(false);
+    enableDateRangeWidget(false);
     switch(dateWidget->itemData(idx).toInt())
     {
     case All:
@@ -279,6 +282,7 @@ void TransactionView::chooseDate(int idx)
         dateRangeChanged();
         break;
     }
+    updateTotalAmount();
 }
 
 void TransactionView::chooseType(int idx)
@@ -287,6 +291,7 @@ void TransactionView::chooseType(int idx)
         return;
     transactionProxyModel->setTypeFilter(
         typeWidget->itemData(idx).toInt());
+    updateTotalAmount();
 }
 
 void TransactionView::chooseWatchonly(int idx)
@@ -295,6 +300,7 @@ void TransactionView::chooseWatchonly(int idx)
         return;
     transactionProxyModel->setWatchOnlyFilter(
         (TransactionFilterProxy::WatchOnlyFilter)watchOnlyWidget->itemData(idx).toInt());
+    updateTotalAmount();
 }
 
 void TransactionView::changedPrefix(const QString &prefix)
@@ -317,7 +323,16 @@ void TransactionView::changedAmount(const QString &amount)
     {
         transactionProxyModel->setMinAmount(0);
     }
+
+    updateTotalAmount();
 }
+
+void TransactionView::updateTotalAmount()
+{
+    QString str = SilkUnits::format(SilkUnits::SLK, transactionProxyModel->getTotalAmount());
+    totalAmountWidget->setText(str);
+}
+
 
 void TransactionView::exportClicked()
 {
@@ -449,6 +464,13 @@ void TransactionView::openThirdPartyTxUrl(QString url)
          QDesktopServices::openUrl(QUrl::fromUserInput(url.replace("%s", selection.at(0).data(TransactionTableModel::TxHashRole).toString())));
 }
 
+void TransactionView::enableDateRangeWidget(bool enable)
+{
+    dateFrom->setEnabled(enable);
+    dateTo->setEnabled(enable);
+}
+
+
 QWidget *TransactionView::createDateRangeWidget()
 {
     dateRangeWidget = new QFrame();
@@ -475,8 +497,14 @@ QWidget *TransactionView::createDateRangeWidget()
     layout->addWidget(dateTo);
     layout->addStretch();
 
+    layout->addWidget(new QLabel(tr("Total:")));
+    totalAmountWidget = new QLabel(this);
+    totalAmountWidget->setText("0");
+    totalAmountWidget->setFixedWidth(100);
+    layout->addWidget(totalAmountWidget);
+
     // Hide by default
-    dateRangeWidget->setVisible(false);
+    enableDateRangeWidget(false);
 
     // Notify on change
     connect(dateFrom, SIGNAL(dateChanged(QDate)), this, SLOT(dateRangeChanged()));
@@ -492,6 +520,8 @@ void TransactionView::dateRangeChanged()
     transactionProxyModel->setDateRange(
             QDateTime(dateFrom->date()),
             QDateTime(dateTo->date()).addDays(1));
+
+    updateTotalAmount();
 }
 
 void TransactionView::focusTransaction(const QModelIndex &idx)

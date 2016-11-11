@@ -53,6 +53,8 @@ public:
 
     int rowCount(const QModelIndex &parent = QModelIndex()) const;
 
+    qint64 getTotalAmount() const { return totalAmount; }
+
 protected:
     bool filterAcceptsRow(int source_row, const QModelIndex & source_parent) const;
 
@@ -65,6 +67,7 @@ private:
     CAmount minAmount;
     int limitRows;
     bool showInactive;
+    mutable qint64 totalAmount;
 };
 
 #endif // SILK_QT_TRANSACTIONFILTERPROXY_H

@@ -24,6 +24,7 @@ class QMenu;
 class QModelIndex;
 class QSignalMapper;
 class QTableView;
+class QLabel;
 QT_END_NAMESPACE
 
 /** Widget showing the transaction list for a wallet, including a filter row.
@@ -69,7 +70,8 @@ private:
     QComboBox *watchOnlyWidget;
     QLineEdit *addressWidget;
     QLineEdit *amountWidget;
-
+    QLabel *totalAmountWidgetLabel;
+    QLabel *totalAmountWidget;
     QMenu *contextMenu;
     QSignalMapper *mapperThirdPartyTxUrls;
 
@@ -78,6 +80,8 @@ private:
     QDateTimeEdit *dateTo;
 
     QWidget *createDateRangeWidget();
+    void updateTotalAmount();
+    void enableDateRangeWidget(bool enable);
 
     GUIUtil::TableViewLastColumnResizingFixer *columnResizingFixer;
 
