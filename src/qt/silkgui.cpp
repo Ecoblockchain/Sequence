@@ -7,7 +7,6 @@
 #include "silkgui.h"
 
 #include "silkunits.h"
-#include "calcdialog.h"
 #include "clientmodel.h"
 #include "guiconstants.h"
 #include "guiutil.h"
@@ -17,6 +16,7 @@
 #include "optionsdialog.h"
 #include "optionsmodel.h"
 #include "rpcconsole.h"
+#include "stakereportdialog.h"
 #include "utilitydialog.h"
 #include "wallet/wallet.h"
 #include "multisigdialog.h"
@@ -63,6 +63,8 @@
 #else
 #include <QUrlQuery>
 #endif
+
+class WalletModel;
 
 extern bool fWalletUnlockMintOnly;
 
@@ -357,10 +359,6 @@ void SilkGUI::createActions(const NetworkStyle *networkStyle)
     toggleHideAction = new QAction(networkStyle->getAppIcon(), tr("&Show / Hide"), this);
     toggleHideAction->setStatusTip(tr("Show or hide the main Window"));
 
-    calcAction = new QAction(QIcon(":/icons/silk"), tr("&Stake Calculator"), this);
-    calcAction->setToolTip(tr("Open Stake Calculator"));
-    calcAction->setMenuRole(QAction::AboutRole);
-
     encryptWalletAction = new QAction(QIcon(":/icons/lock_closed"), tr("&Encrypt Wallet..."), this);
     encryptWalletAction->setStatusTip(tr("Encrypt the private keys that belong to your wallet"));
     encryptWalletAction->setCheckable(true);
@@ -372,6 +370,9 @@ void SilkGUI::createActions(const NetworkStyle *networkStyle)
     signMessageAction->setStatusTip(tr("Sign messages with your Silk addresses to prove you own them"));
     verifyMessageAction = new QAction(QIcon(":/icons/transaction_0"), tr("&Verify message..."), this);
     verifyMessageAction->setStatusTip(tr("Verify messages to ensure they were signed with specified Silk addresses"));
+
+    stakeReportAction = new QAction(QIcon(":/icons/tx_mined"), tr("Show Stake Report"), this);
+    stakeReportAction->setToolTip(tr("View the Wallet's Statistical Analysis of Coin Generation and Staking"));
 
     openInfoAction = new QAction(QApplication::style()->standardIcon(QStyle::SP_MessageBoxInformation), tr("&Information"), this);
     openInfoAction->setStatusTip(tr("Show diagnostic information"));
@@ -403,8 +404,6 @@ void SilkGUI::createActions(const NetworkStyle *networkStyle)
     connect(toggleHideAction, SIGNAL(triggered()), this, SLOT(toggleHidden()));
     connect(showHelpMessageAction, SIGNAL(triggered()), this, SLOT(showHelpMessageClicked()));
 
-    connect(calcAction, SIGNAL(triggered()), this, SLOT(showNormalIfMinimized()));
-    connect(calcAction, SIGNAL(triggered()), this, SLOT(calcClicked()));
 #ifdef ENABLE_WALLET
     if(walletFrame)
     {
@@ -413,6 +412,7 @@ void SilkGUI::createActions(const NetworkStyle *networkStyle)
         connect(changePassphraseAction, SIGNAL(triggered()), walletFrame, SLOT(changePassphrase()));
         connect(signMessageAction, SIGNAL(triggered()), this, SLOT(gotoSignMessageTab()));
         connect(verifyMessageAction, SIGNAL(triggered()), this, SLOT(gotoVerifyMessageTab()));
+        connect(stakeReportAction, SIGNAL(triggered()), this, SLOT(stakeReportClicked()));
         connect(usedSendingAddressesAction, SIGNAL(triggered()), walletFrame, SLOT(usedSendingAddresses()));
         connect(usedReceivingAddressesAction, SIGNAL(triggered()), walletFrame, SLOT(usedReceivingAddresses()));
         connect(openAction, SIGNAL(triggered()), this, SLOT(openClicked()));
@@ -450,20 +450,21 @@ void SilkGUI::createMenuBar()
     {
         settings->addAction(encryptWalletAction);
         settings->addAction(changePassphraseAction);
-        settings->addAction(calcAction);
         settings->addSeparator();
     }
     settings->addAction(optionsAction);
 
+    QMenu *tools = appMenuBar->addMenu(tr("&Tools"));
     if(walletFrame)
     {
-        QMenu *tools = appMenuBar->addMenu(tr("&Tools"));
         tools->addAction(openInfoAction);
         tools->addAction(openRPCConsoleAction);
         tools->addAction(openNetworkAction);
         tools->addAction(openPeersAction);
         tools->addAction(openRepairAction);
+        tools->addSeparator();
     }
+    tools->addAction(stakeReportAction);
 
     QMenu *help = appMenuBar->addMenu(tr("&Help"));
     help->addAction(showHelpMessageAction);
@@ -629,6 +630,8 @@ void SilkGUI::createTrayIconMenu()
     trayIconMenu->addAction(signMessageAction);
     trayIconMenu->addAction(verifyMessageAction);
     trayIconMenu->addSeparator();
+    trayIconMenu->addAction(stakeReportAction);
+    trayIconMenu->addSeparator();
     trayIconMenu->addAction(optionsAction);
     trayIconMenu->addAction(openInfoAction);
     trayIconMenu->addAction(openRPCConsoleAction);
@@ -676,6 +679,14 @@ void SilkGUI::showHelpMessageClicked()
     HelpMessageDialog *help = new HelpMessageDialog(this, false);
     help->setAttribute(Qt::WA_DeleteOnClose);
     help->show();
+}
+
+void SilkGUI::stakeReportClicked()
+{
+    WalletModel *model;
+    static StakeReportDialog dlg;
+    dlg.setModel(model);
+    dlg.show();
 }
 
 #ifdef ENABLE_WALLET
@@ -1148,12 +1159,6 @@ void SilkGUI::updateStakingIcon()
         else
             labelStakingIcon->setToolTip(tr("Staking: Off"));
     }
-}
-
-void SilkGUI::calcClicked()
-{
-    calcDialog dlg;
-    dlg.exec();
 }
 
 void SilkGUI::detectShutdown()

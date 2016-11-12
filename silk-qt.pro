@@ -477,6 +477,7 @@ HEADERS += \
     src/qt/transactiondescdialog.h \
     src/qt/transactiondesc.h \
     src/qt/trafficgraphwidget.h \
+    src/qt/stakereportdialog.h \
     src/qt/splashscreen.h \
     src/qt/silkunits.h \
     src/qt/silkgui.h \
@@ -513,7 +514,6 @@ HEADERS += \
     src/qt/coincontroltreewidget.h \
     src/qt/coincontroldialog.h \
     src/qt/clientmodel.h \
-    src/qt/calcdialog.h \
     src/qt/askpassphrasedialog.h \
     src/qt/addresstablemodel.h \
     src/qt/addressbookpage.h \
@@ -531,7 +531,6 @@ FORMS += \
     src/qt/forms/askpassphrasedialog.ui \
     src/qt/forms/coincontroldialog.ui \
     src/qt/forms/createmultisigaddrdialog.ui \
-    src/qt/forms/calcdialog.ui \
     src/qt/forms/dnspage.ui \
     src/qt/forms/editaddressdialog.ui \
     src/qt/forms/helpmessagedialog.ui \
@@ -548,6 +547,7 @@ FORMS += \
     src/qt/forms/sendcoinsdialog.ui \
     src/qt/forms/sendcoinsentry.ui \
     src/qt/forms/signverifymessagedialog.ui \
+    src/qt/forms/stakereportdialog.ui \
     src/qt/forms/transactiondescdialog.ui
 
 SOURCES += \
@@ -670,6 +670,7 @@ SOURCES += \
     src/qt/silkstrings.cpp \
     src/qt/silkunits.cpp \
     src/qt/splashscreen.cpp \
+    src/qt/stakereportdialog.cpp \
     src/qt/trafficgraphwidget.cpp \
     src/qt/transactiondesc.cpp \
     src/qt/transactiondescdialog.cpp \

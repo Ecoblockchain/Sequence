@@ -135,7 +135,7 @@ private:
 
     QAction *openAction;
     QAction *showHelpMessageAction;
-    QAction *calcAction;
+    QAction *stakeReportAction;
 
     QSystemTrayIcon *trayIcon;
     QMenu *trayIconMenu;
@@ -203,6 +203,7 @@ public slots:
 
     /** Show incoming transaction notification for new transactions. */
     void incomingTransaction(const QString& date, int unit, const CAmount& amount, const QString& type, const QString& address);
+
 #endif // ENABLE_WALLET
 
 private slots:
@@ -227,14 +228,14 @@ private slots:
     /** Show open dialog */
     void openClicked();
 #endif // ENABLE_WALLET
+    /** Show Stake Report Dialog */
+    void stakeReportClicked();
     /** Show configuration dialog */
     void optionsClicked();
     /** Show about dialog */
     void aboutClicked();
     /** Show help message dialog */
     void showHelpMessageClicked();
-    /** Show Stake Calculator Dialog */
-    void calcClicked();
 #ifndef Q_OS_MAC
     /** Handle tray icon clicked */
     void trayIconActivated(QSystemTrayIcon::ActivationReason reason);
