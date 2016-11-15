@@ -456,17 +456,17 @@ void SilkGUI::createMenuBar()
     }
     settings->addAction(optionsAction);
 
-    QMenu *tools = appMenuBar->addMenu(tr("&Tools"));
     if(walletFrame)
     {
+        QMenu *tools = appMenuBar->addMenu(tr("&Tools"));
         tools->addAction(openInfoAction);
         tools->addAction(openRPCConsoleAction);
         tools->addAction(openNetworkAction);
         tools->addAction(openPeersAction);
         tools->addAction(openRepairAction);
         tools->addSeparator();
+        tools->addAction(stakeReportAction);
     }
-    tools->addAction(stakeReportAction);
 
     QMenu *help = appMenuBar->addMenu(tr("&Help"));
     help->addAction(showHelpMessageAction);
@@ -585,6 +585,7 @@ void SilkGUI::setWalletActionsEnabled(bool enabled)
     usedSendingAddressesAction->setEnabled(enabled);
     usedReceivingAddressesAction->setEnabled(enabled);
     openAction->setEnabled(enabled);
+    stakeReportAction->setEnabled(enabled);
 }
 
 void SilkGUI::createTrayIcon(const NetworkStyle *networkStyle)
@@ -683,14 +684,6 @@ void SilkGUI::showHelpMessageClicked()
     help->show();
 }
 
-void SilkGUI::stakeReportClicked()
-{
-    WalletModel *model;
-    static StakeReportDialog dlg;
-    dlg.setModel(model);
-    dlg.show();
-}
-
 #ifdef ENABLE_WALLET
 void SilkGUI::openClicked()
 {
@@ -699,6 +692,14 @@ void SilkGUI::openClicked()
     {
         emit receivedURI(dlg.getURI());
     }
+}
+
+void SilkGUI::stakeReportClicked(WalletModel *walletModel)
+{
+    //WalletModel *walletModel;
+    static StakeReportDialog dlg;
+    dlg.setModel(walletModel);
+    dlg.show();
 }
 
 void SilkGUI::gotoOverviewPage()

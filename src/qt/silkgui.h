@@ -225,11 +225,12 @@ private slots:
     /** Show Sign/Verify Message dialog and switch to verify message tab */
     void gotoVerifyMessageTab(QString addr = "");
 
+    /** Show Stake Report Dialog */
+    void stakeReportClicked(WalletModel *walletModel);
     /** Show open dialog */
     void openClicked();
 #endif // ENABLE_WALLET
-    /** Show Stake Report Dialog */
-    void stakeReportClicked();
+    
     /** Show configuration dialog */
     void optionsClicked();
     /** Show about dialog */
