@@ -119,6 +119,7 @@ private:
     QAction *usedReceivingAddressesAction;
     QAction *signMessageAction;
     QAction *verifyMessageAction;
+    QAction *stakeReportAction;
     QAction *aboutAction;
     QAction *receiveCoinsAction;
     QAction *optionsAction;
@@ -135,7 +136,6 @@ private:
 
     QAction *openAction;
     QAction *showHelpMessageAction;
-    QAction *stakeReportAction;
 
     QSystemTrayIcon *trayIcon;
     QMenu *trayIconMenu;

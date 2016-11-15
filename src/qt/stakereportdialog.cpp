@@ -12,6 +12,7 @@
 #include "rpc/rpcregister.h"
 #include "wallet/wallet_ismine.h"
 #include "optionsmodel.h"
+
 #include "main.h"   // for hashBestChain
 
 #include <QWidget>
@@ -83,14 +84,14 @@ void StakeReportDialog::setModel(WalletModel *model)
         {
             QTimer *timer = new QTimer(this);
             connect(timer, SIGNAL(timeout()), this, SLOT(updateStakeReportTimer()));
-         connect(ex_model, SIGNAL(balanceChanged(qint64, qint64, qint64, qint64)), this, SLOT(updateStakeReportbalanceChanged(qint64, qint64, qint64, qint64)));
+            connect(ex_model, SIGNAL(balanceChanged(CAmount, CAmount, CAmount, CAmount, CAmount, CAmount, CAmount, CAmount, CAmount)), this, SLOT(updateStakeReportbalanceChanged(CAmount, CAmount, CAmount, CAmount, CAmount, CAmount, CAmount, CAmount, CAmount)));
 
             timer->start(MODEL_UPDATE_DELAY*5);
         }
     }
 }
 
-void StakeReportDialog::updateStakeReportbalanceChanged(qint64, qint64, qint64, qint64)
+void StakeReportDialog::updateStakeReportbalanceChanged(CAmount, CAmount, CAmount, CAmount, CAmount, CAmount, CAmount, CAmount, CAmount)
 {
     StakeReportDialog::updateStakeReportNow();
 }

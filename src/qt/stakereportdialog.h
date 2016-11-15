@@ -6,6 +6,8 @@
 #ifndef SILK_STAKE_REPORT_DIALOG_H
 #define SILK_STAKE_REPORT_DIALOG_H
 
+#include "amount.h"
+
 #include <QDialog>
 
 namespace Ui {
@@ -39,7 +41,7 @@ private slots:
     void updateStakeReportTimer();
 
 public slots:
-    void updateStakeReportbalanceChanged(qint64, qint64, qint64, qint64);
+    void updateStakeReportbalanceChanged(CAmount, CAmount, CAmount, CAmount, CAmount, CAmount, CAmount, CAmount, CAmount);
     void updateStakeReportNow();
     void updateDisplayUnit(int);
     void CopyAllToClipboard();

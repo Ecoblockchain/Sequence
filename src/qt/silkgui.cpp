@@ -92,6 +92,7 @@ SilkGUI::SilkGUI(const NetworkStyle *networkStyle, QWidget *parent) :
     usedReceivingAddressesAction(0),
     signMessageAction(0),
     verifyMessageAction(0),
+    stakeReportAction(0),
     aboutAction(0),
     receiveCoinsAction(0),
     optionsAction(0),
@@ -372,7 +373,7 @@ void SilkGUI::createActions(const NetworkStyle *networkStyle)
     verifyMessageAction->setStatusTip(tr("Verify messages to ensure they were signed with specified Silk addresses"));
 
     stakeReportAction = new QAction(QIcon(":/icons/tx_mined"), tr("Show Stake Report"), this);
-    stakeReportAction->setToolTip(tr("View the Wallet's Statistical Analysis of Coin Generation and Staking"));
+    stakeReportAction->setStatusTip(tr("View the Wallet's Statistical Analysis of Coin Generation and Staking"));
 
     openInfoAction = new QAction(QApplication::style()->standardIcon(QStyle::SP_MessageBoxInformation), tr("&Information"), this);
     openInfoAction->setStatusTip(tr("Show diagnostic information"));
@@ -416,6 +417,7 @@ void SilkGUI::createActions(const NetworkStyle *networkStyle)
         connect(usedSendingAddressesAction, SIGNAL(triggered()), walletFrame, SLOT(usedSendingAddresses()));
         connect(usedReceivingAddressesAction, SIGNAL(triggered()), walletFrame, SLOT(usedReceivingAddresses()));
         connect(openAction, SIGNAL(triggered()), this, SLOT(openClicked()));
+        connect(stakeReportAction, SIGNAL(triggered()), this, SLOT(stakeReportClicked()));
     }
 #endif // ENABLE_WALLET
 }
