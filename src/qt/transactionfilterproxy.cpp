@@ -39,8 +39,8 @@ bool TransactionFilterProxy::filterAcceptsRow(int sourceRow, const QModelIndex &
     QDateTime datetime = index.data(TransactionTableModel::DateRole).toDateTime();
     bool involvesWatchAddress = index.data(TransactionTableModel::WatchonlyRole).toBool();
     QString address = index.data(TransactionTableModel::AddressRole).toString();
-    qint64 amount = index.data(TransactionTableModel::AmountRole).toLongLong();
-    qint64 abs_amount = llabs(amount);
+    CAmount amount = index.data(TransactionTableModel::AmountRole).toLongLong();
+    CAmount abs_amount = llabs(amount);
     QString label = index.data(TransactionTableModel::LabelRole).toString();
     int status = index.data(TransactionTableModel::StatusRole).toInt();
 
