@@ -241,7 +241,7 @@ void TransactionView::chooseDate(int idx)
     if(!transactionProxyModel)
         return;
     QDate current = QDate::currentDate();
-    enableDateRangeWidget(false);
+    dateRangeWidget->setVisible(true);
     switch(dateWidget->itemData(idx).toInt())
     {
     case All:
@@ -464,13 +464,6 @@ void TransactionView::openThirdPartyTxUrl(QString url)
          QDesktopServices::openUrl(QUrl::fromUserInput(url.replace("%s", selection.at(0).data(TransactionTableModel::TxHashRole).toString())));
 }
 
-void TransactionView::enableDateRangeWidget(bool enable)
-{
-    dateFrom->setEnabled(enable);
-    dateTo->setEnabled(enable);
-}
-
-
 QWidget *TransactionView::createDateRangeWidget()
 {
     dateRangeWidget = new QFrame();
@@ -504,7 +497,7 @@ QWidget *TransactionView::createDateRangeWidget()
     layout->addWidget(totalAmountWidget);
 
     // Hide by default
-    enableDateRangeWidget(false);
+    dateRangeWidget->setVisible(true);
 
     // Notify on change
     connect(dateFrom, SIGNAL(dateChanged(QDate)), this, SLOT(dateRangeChanged()));

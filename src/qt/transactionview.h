@@ -81,7 +81,6 @@ private:
 
     QWidget *createDateRangeWidget();
     void updateTotalAmount();
-    void enableDateRangeWidget(bool enable);
 
     GUIUtil::TableViewLastColumnResizingFixer *columnResizingFixer;
 
