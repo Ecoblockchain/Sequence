@@ -119,6 +119,7 @@ private:
     QAction *usedReceivingAddressesAction;
     QAction *signMessageAction;
     QAction *verifyMessageAction;
+    QAction *stakeReportAction;
     QAction *aboutAction;
     QAction *receiveCoinsAction;
     QAction *optionsAction;
@@ -135,7 +136,6 @@ private:
 
     QAction *openAction;
     QAction *showHelpMessageAction;
-    QAction *calcAction;
 
     QSystemTrayIcon *trayIcon;
     QMenu *trayIconMenu;
@@ -203,6 +203,7 @@ public slots:
 
     /** Show incoming transaction notification for new transactions. */
     void incomingTransaction(const QString& date, int unit, const CAmount& amount, const QString& type, const QString& address);
+
 #endif // ENABLE_WALLET
 
 private slots:
@@ -224,17 +225,18 @@ private slots:
     /** Show Sign/Verify Message dialog and switch to verify message tab */
     void gotoVerifyMessageTab(QString addr = "");
 
+    /** Show Stake Report Dialog */
+    void stakeReportClicked(WalletModel *walletModel);
     /** Show open dialog */
     void openClicked();
 #endif // ENABLE_WALLET
+    
     /** Show configuration dialog */
     void optionsClicked();
     /** Show about dialog */
     void aboutClicked();
     /** Show help message dialog */
     void showHelpMessageClicked();
-    /** Show Stake Calculator Dialog */
-    void calcClicked();
 #ifndef Q_OS_MAC
     /** Handle tray icon clicked */
     void trayIconActivated(QSystemTrayIcon::ActivationReason reason);

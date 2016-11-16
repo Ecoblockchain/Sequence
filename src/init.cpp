@@ -403,7 +403,10 @@ std::string HelpMessage(HelpMessageMode mode)
     strUsage += "                         " + _("<category> can be:");
     strUsage +=                                 " addrman, alert, bench, coindb, db, lock, rand, rpc, selectcoins, mempool, net"; // Don't translate these and qt below
     if (mode == HMM_SILK_QT)
+    {
         strUsage += ", qt";
+        strUsage += "-disablereportupdate " + strprintf(_("Disable auto update of stake report window (default: %u)"), 0) + "\n";
+    }
     strUsage += ".\n";
 #ifdef ENABLE_WALLET
     strUsage += "  -gen                   " + strprintf(_("Generate coins (default: %u)"), 0) + "\n";

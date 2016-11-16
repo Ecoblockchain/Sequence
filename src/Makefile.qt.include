@@ -78,7 +78,6 @@ QT_TS = \
 QT_FORMS_UI = \
   qt/forms/addressbookpage.ui \
   qt/forms/askpassphrasedialog.ui \
-  qt/forms/calcdialog.ui \
   qt/forms/coincontroldialog.ui \
   qt/forms/dnspage.ui \
   qt/forms/editaddressdialog.ui \
@@ -93,6 +92,7 @@ QT_FORMS_UI = \
   qt/forms/sendcoinsdialog.ui \
   qt/forms/sendcoinsentry.ui \
   qt/forms/signverifymessagedialog.ui \
+  qt/forms/stakereportdialog.ui \
   qt/forms/transactiondescdialog.ui \
   qt/forms/multisigaddressentry.ui \
   qt/forms/multisigdialog.ui \
@@ -106,7 +106,6 @@ QT_MOC_CPP = \
   qt/moc_silkamountfield.cpp \
   qt/moc_silkgui.cpp \
   qt/moc_silkunits.cpp \
-  qt/moc_calcdialog.cpp \
   qt/moc_clientmodel.cpp \
   qt/moc_coincontroldialog.cpp \
   qt/moc_coincontroltreewidget.cpp \
@@ -135,6 +134,7 @@ QT_MOC_CPP = \
   qt/moc_sendcoinsentry.cpp \
   qt/moc_signverifymessagedialog.cpp \
   qt/moc_splashscreen.cpp \
+  qt/moc_stakereportdialog.cpp \
   qt/moc_trafficgraphwidget.cpp \
   qt/moc_transactiondesc.cpp \
   qt/moc_transactiondescdialog.cpp \
@@ -177,7 +177,6 @@ SILK_QT_H = \
   qt/silkamountfield.h \
   qt/silkgui.h \
   qt/silkunits.h \
-  qt/calcdialog.h \
   qt/clientmodel.h \
   qt/coincontroldialog.h \
   qt/coincontroltreewidget.h \
@@ -209,6 +208,7 @@ SILK_QT_H = \
   qt/sendcoinsentry.h \
   qt/signverifymessagedialog.h \
   qt/splashscreen.h \
+  qt/stakereportdialog.h \
   qt/trafficgraphwidget.h \
   qt/transactiondesc.h \
   qt/transactiondescdialog.h \
@@ -282,7 +282,6 @@ SILK_QT_CPP = \
   qt/silkamountfield.cpp \
   qt/silkgui.cpp \
   qt/silkunits.cpp \
-  qt/calcdialog.cpp \
   qt/clientmodel.cpp \
   qt/csvmodelwriter.cpp \
   qt/guiutil.cpp \
@@ -296,6 +295,7 @@ SILK_QT_CPP = \
   qt/qvaluecombobox.cpp \
   qt/rpcconsole.cpp \
   qt/splashscreen.cpp \
+  qt/stakereportdialog.cpp \
   qt/trafficgraphwidget.cpp \
   qt/utilitydialog.cpp \
   qt/winshutdownmonitor.cpp \
